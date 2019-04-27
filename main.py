@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, send_from_directory
 from datamuse import datamuse
 from werkzeug.utils import secure_filename
+import werkzeug
 import logging
 import os
 logging.basicConfig(level=logging.DEBUG)
@@ -27,6 +28,10 @@ def rhymes(word):
 @app.route('/', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
+        for i in range(0,request.form["size"]):
+            if request.form.get("input"+i,default="").equals(""):
+                request.files["input"+i]
+        print(request.form)
         if 'file' not in request.files:
             flash('ur dum')
         file = request.files['file']

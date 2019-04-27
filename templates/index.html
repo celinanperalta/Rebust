@@ -16,21 +16,17 @@
 	  {% endif %}
 	{% endwith %}
 </p>
-<script>
-    func append_img_input() {
-        $("#rebus_form").append("<input aslfjsl>");
-    }
-</script>
-<button action="append_img_imput()">Upload Image</button>
+
+<button onclick="add_word()">Add New Word</button>
+<button onclick="append_img_input()">Upload Image</button>
+<button onclick="append_text_input()">Upload Image URL</button>
+<button onclick="append_text_input()">Upload Text</button>
 <form id="rebus_form" action = "/" method = "POST" enctype = "multipart/form-data">
-        <input type = "file" name="file" multiple="true" autocomplete="off" required/>
-        <input type = "submit" value="Submit"/>
+    <input type="hidden" name="size" value="1-0"/>
+    <input type="submit" value="Submit Rebus"/><br>
+
 </form>
 <br></br>
-<form action = "/yay1" method="POST">
-    <input name="text">
-    <input type="submit">
-</form>
 <img src="{{ user_image }}" alt="User Image">
 {% endblock %}
 
