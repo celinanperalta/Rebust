@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import logging
 import os
 import validators
-import rebust
+from rebust import Rebust
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -61,8 +61,10 @@ def upload_files():
         #     filename = secure_filename(file.filename)
         #     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         #     file.save(full_filename)
+        rebust = Rebust()
+        print(words)
         rebust.parse_rebus(words)
-        return render_template('index.html', user_image=full_filename)
+        return render_template('index.html')
     else:
         return render_template('index.html')
 
