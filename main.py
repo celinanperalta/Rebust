@@ -1,10 +1,11 @@
 from flask import Flask, flash, redirect, render_template, request, send_from_directory
 from datamuse import datamuse
 from werkzeug.utils import secure_filename
-import werkzeug
 import logging
 import os
-import rebust
+import validators
+from rebust import Rebust
+
 logging.basicConfig(level=logging.DEBUG)
 
 UPLOAD_FOLDER = os.path.basename('uploads')
@@ -31,20 +32,39 @@ def rhymes(word):
 @app.route('/', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
-        for i in range(0,request.form["size"]):
-            if request.form.get("input"+i,default="").equals(""):
-                request.files["input"+i]
-        print(request.form)
-        if 'file' not in request.files:
-            flash('ur dum')
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file')
-        elif file:
-            filename = secure_filename(file.filename)
-            full_filename = full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(full_filename)
-            return render_template('index.html', user_image=full_filename)
+        word_num = 0
+        index = 0
+        words = [[]]
+        inputs = int(request.form["size"][request.form["size"].index("-"):])
+        for i in range(0, inputs):
+            if request.form.get(word_num+"-"+i, default="").equals(""):
+                file = request.files[word_num+"-"+i]
+                if file.filename == '':
+                    words.append([])
+                    word_num += 1
+                    index = 0
+                else:
+                    filename = secure_filename(file.filename)
+                    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(full_filename)
+                    words[word_num[index]] = ("img", (full_filename[full_filename.rindex(".")+1], full_filename))
+                    index += 1
+            else:
+                str_type = "str"
+                if validators.url(request.form[word_num+"-"+i]):
+                    str_type = "url"
+                words[word_num][i] = (str_type, request.form[word_num+"-"+i])
+                index += 1
+
+
+        # if file:
+        #     filename = secure_filename(file.filename)
+        #     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        #     file.save(full_filename)
+        rebust = Rebust()
+        print(words)
+        rebust.parse_rebus(words)
+        return render_template('index.html')
     else:
         return render_template('index.html')
 
