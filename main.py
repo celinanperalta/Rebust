@@ -33,28 +33,26 @@ def rhymes(word):
 def upload_files():
     if request.method == 'POST':
         word_num = 0
-        index = 0
         words = [[]]
-        inputs = int(request.form["size"][request.form["size"].index("-"):])
-        for i in range(0, inputs):
-            if request.form.get(word_num+"-"+i, default="").equals(""):
-                file = request.files[word_num+"-"+i]
-                if file.filename == '':
-                    words.append([])
-                    word_num += 1
-                    index = 0
-                else:
+        inputs = int(request.form["size"][request.form["size"].index("-")+1:])
+        print(inputs)
+        for i in range(1, inputs+1):
+            if request.form.get(str(word_num)+"-"+str(i), default="") == "":
+                try:
+                    file = request.files[str(word_num)+"-"+str(i)]
                     filename = secure_filename(file.filename)
                     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(full_filename)
-                    words[word_num[index]] = ("img", (full_filename[full_filename.rindex(".")+1], full_filename))
-                    index += 1
+                    words[word_num].append(("img", (full_filename[full_filename.rindex(".")+1:], full_filename)))
+                except:
+                    words.append([])
+                    word_num += 1
+
             else:
                 str_type = "str"
-                if validators.url(request.form[word_num+"-"+i]):
+                if validators.url(request.form[str(word_num)+"-"+str(i)]):
                     str_type = "url"
-                words[word_num][i] = (str_type, request.form[word_num+"-"+i])
-                index += 1
+                words[word_num].append((str_type, request.form[str(word_num)+"-"+str(i)]))
 
 
         # if file:
