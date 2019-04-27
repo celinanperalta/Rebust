@@ -1,6 +1,12 @@
 from datamuse import datamuse
 from clarifai.rest import ClarifaiApp, Workflow
 import re, heapq
+import nltk
+from nltk.corpus import wordnet
+
+nltk.download('wordnet')
+
+
 
 class Rebust:
 
@@ -24,13 +30,31 @@ class Rebust:
                str += word[i]
         return str
 
-    def get_sounds_like(self, word):
+    def get_syllables(self,word):
+        word = word.lower()
+        count = 0
+        vowels = "aeiouy"
+        if word[0] in vowels:
+            count += 1
+        for index in range(1, len(word)):
+            if word[index] in vowels and word[index - 1] not in vowels:
+                count += 1
+        if word.endswith("e"):
+            count -= 1
+        if count == 0:
+            count += 1
+        return count
+
+    def get_sounds_like(self, word, n_syll):
 
         res = self.api.words(sl=word, v='enwiki', max=self.MAX_RESULTS)
         ret = []
         # print("Similar sound to: " + word)
         for w in res:
-            ret.append(w['word'])
+            if wordnet.synsets(w['word']):
+                #append it to the final array
+                if(self.get_syllables(w['word']) <= n_syll):
+                    ret.append(w['word'])
         # print("---------------------------------------")
 
         return ret
@@ -51,7 +75,8 @@ class Rebust:
         top_results = []
 
         for i in heapq.nlargest(5, results):
-            top_results.append(i[1])
+            if self.get_syllables(i[1]) <= 3:
+                top_results.append(i[1])
 
         return top_results
 
@@ -90,7 +115,7 @@ class Rebust:
         final = []
 
         for x in poss:
-            res = self.get_sounds_like(x)
+            res = self.get_sounds_like(x, 5)
             if res != None:
                 final += res[0:3]
 
