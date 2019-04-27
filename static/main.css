@@ -3,7 +3,15 @@ html {
 
 }
 
-h1 {
-    text-align: center;
+.container {
+  position: relative;
+  text-align: center;
+  color: pink;
+}
+.centered {
     font-family: 'ZCOOL KuaiLe', cursive;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

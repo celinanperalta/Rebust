@@ -3,6 +3,7 @@
 
 {% block content %}
 
+
 <p>Upload form here</p>
 <p>
 	{% with messages = get_flashed_messages() %}
@@ -15,14 +16,21 @@
 	  {% endif %}
 	{% endwith %}
 </p>
-<form action = "/" method = "POST" enctype = "multipart/form-data">
+<script>
+    func append_img_input() {
+        $("#rebus_form").append("<input aslfjsl>");
+    }
+</script>
+<button action="append_img_imput()">Upload Image</button>
+<form id="rebus_form" action = "/" method = "POST" enctype = "multipart/form-data">
         <input type = "file" name="file" multiple="true" autocomplete="off" required/>
         <input type = "submit" value="Submit"/>
 </form>
-
-<form method="POST">
+<br></br>
+<form action = "/yay1" method="POST">
     <input name="text">
     <input type="submit">
 </form>
+<img src="{{ user_image }}" alt="User Image">
 {% endblock %}
 

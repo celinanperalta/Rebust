@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, url_for, session, abort
+from flask import Flask, flash, redirect, render_template, request, send_from_directory
 from datamuse import datamuse
 from werkzeug.utils import secure_filename
 import logging
@@ -34,10 +34,15 @@ def upload_files():
             flash('No selected file')
         elif file:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('file uploaded succcccccessfully bish')
-    return render_template('index.html')
+            full_filename = full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(full_filename)
+            return render_template('index.html', user_image=full_filename)
+    else:
+        return render_template('index.html')
 
+@app.route('/uploads/<filename>')
+def send_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 @app.route('/yay1', methods=['POST'])
 def my_form_post():
