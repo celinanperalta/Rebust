@@ -5,17 +5,6 @@
 
 
 <p>Upload form here</p>
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
 
 <button onclick="add_word()">Add New Word</button>
 <button onclick="append_img_input()">Upload Image</button>
@@ -26,6 +15,7 @@
     <input type="submit" value="Submit Rebus"/><br>
 </form>
 <br></br>
-<img src="{{ user_image }}" alt="User Image">
+<p>{{ extra_text }}</p>
+<!--<img src="{{ user_image }}" alt="User Image">-->
 {% endblock %}
 
