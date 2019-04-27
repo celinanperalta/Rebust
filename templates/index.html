@@ -19,12 +19,11 @@
 
 <button onclick="add_word()">Add New Word</button>
 <button onclick="append_img_input()">Upload Image</button>
-<button onclick="append_text_input()">Upload Image URL</button>
+<button onclick="append_url_input()">Upload Image URL</button>
 <button onclick="append_text_input()">Upload Text</button>
 <form id="rebus_form" action = "/" method = "POST" enctype = "multipart/form-data">
-    <input type="hidden" name="size" value="1-0"/>
+    <input type="hidden" id="size" value="1-0"/>
     <input type="submit" value="Submit Rebus"/><br>
-
 </form>
 <br></br>
 <img src="{{ user_image }}" alt="User Image">
