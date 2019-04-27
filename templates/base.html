@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<title>Rebust</title>
+
+<head>
+    {% block head %}
+    <title>Rebust</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+<h1>Rebust</h1>
+<div id="content">{% block content %}{% endblock %}</div>
+<div id="footer">
+    {% block footer %}
+    <!--&copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>.-->
+    {% endblock %}
+</div>
+</body>

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% for word in word_rhy %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for word in word_rhy %}
          <p>{{word}}</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
