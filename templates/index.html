@@ -4,6 +4,9 @@
 {% block content %}
 
 <p>Upload form here</p>
-
+<form action = "http://localhost:500/uploader" method = "POST" enctype = "multipart/form-data">
+        <input type = "file" name=" file"/>
+        <input type = "submit"/>
+</form>
 {% endblock %}
 

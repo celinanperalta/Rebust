@@ -17,7 +17,7 @@ def rhymes(word):
 
 @app.route('/upload')
 def upload_file():
-    return render_template('upload.html')
+    return render_template('index.html')
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
@@ -26,5 +26,5 @@ def upload_files():
         f.save(secure_filename(f.filename))
         return 'file uploaded succcccccessfully bish'
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='127.0.0.1', port=5000)
     app.run(debug = True)
