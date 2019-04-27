@@ -10,8 +10,8 @@ nltk.download('wordnet')
 
 class Rebust:
 
-    MAX_RESULTS = 10
-    MAX_WORD_RESULTS = 5
+    MAX_RESULTS = 5
+    MAX_WORD_RESULTS = 10
 
     def __init__(self):
         self.api = datamuse.Datamuse()
@@ -52,12 +52,15 @@ class Rebust:
         # print("Similar sound to: " + word)
         for w in res:
             if wordnet.synsets(w['word']):
-                #append it to the final array
                 if(self.get_syllables(w['word']) <= n_syll):
-                    ret.append(w['word'])
-        # print("---------------------------------------")
+                    heapq.heappush(ret, (w['score'], w['word']))
 
-        return ret
+        top_results = []
+
+        for i in heapq.nlargest(self.MAX_RESULTS, ret):
+            top_results.append(i[1])
+
+        return top_results
 
     def get_image_predictions(self, type, img):
         response = None
@@ -106,7 +109,9 @@ class Rebust:
             if x[0] == "str":
                 tokens.append(x[1])
             elif x[0] == "img":
-                tokens.append(self.get_image_predictions(x[1][0], x[1][1]))
+                tokens.append(self.get_image_predictions("img", x[1]))
+            elif x[0] == "url":
+                tokens.append(self.get_image_predictions("url", x[1]))
 
         #run through list, if there is a list of words, see what makes the most sense
         poss = self.generate_combos(tokens)
@@ -119,14 +124,13 @@ class Rebust:
             if res != None:
                 final += res[0:3]
 
-        return final
+        return final[0:self.MAX_WORD_RESULTS]
 
     #this gon be a big boy
     def parse_rebus(self, rebus):
-
         guess = []
         #rebus input should be tuple (type, [str or (img_type, img)]
         for word in rebus:
-            guess += self.solve_word(word)
+            guess.append(self.solve_word(word))
 
 
