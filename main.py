@@ -9,6 +9,7 @@ UPLOAD_FOLDER = os.path.basename('uploads')
 
 app = Flask(__name__)
 api = datamuse.Datamuse()
+app.secret_key = 'buttttttts'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -28,26 +29,19 @@ def rhymes(word):
     word_rhy = api.words(sl=word, max=5)
     return render_template('rhymes.html',word_rhy=word_rhy)
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug = True)
-
-
 @app.route('/upload')
 def upload_file():
     return render_template('index.html')
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect('/upload')
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected for uploading')
-            return redirect('/upload')
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('file uploaded succcccccessfully bish')
-            return redirect('/upload')
+    if 'file' not in request.files:
+        flash('ur dum')
+        return redirect('/upload')
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    flash('file uploaded succcccccessfully bish')
+    return redirect('/upload')
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=5000, debug = True)
