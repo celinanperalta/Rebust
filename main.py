@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import werkzeug
 import logging
 import os
+import rebust
 logging.basicConfig(level=logging.DEBUG)
 
 UPLOAD_FOLDER = os.path.basename('uploads')
@@ -16,6 +17,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 ALLOWED_EXT = set(['png', 'jpg', 'jpeg', 'txt'])
+
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXT
