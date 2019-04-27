@@ -38,5 +38,12 @@ def upload_files():
             flash('file uploaded succcccccessfully bish')
     return render_template('index.html')
 
+
+@app.route('/yay1', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processed_text = text.lower()
+    return processed_text
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug = True)
