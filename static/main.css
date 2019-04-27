@@ -3,13 +3,25 @@ html {
 
 }
 
+body{
+    background-color: #e2ecf7;
+    position: relative;
+}
 .container {
-  position: relative;
   text-align: center;
   color: pink;
+  height: 10%;
+}
+
+#bann,img{
+    width: 100%;
+    height: 10%;
+    z-index:-1;
+
 }
 .centered {
     font-family: 'ZCOOL KuaiLe', cursive;
+    z-index:-2;
     position: absolute;
     top: 50%;
     left: 50%;
