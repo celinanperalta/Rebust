@@ -1,12 +1,11 @@
 from datamuse import datamuse
 from clarifai.rest import ClarifaiApp, Workflow
-import re, heapq
+import re, heapq, config
 import nltk
+
 from nltk.corpus import wordnet
 
 nltk.download('wordnet')
-
-
 
 class Rebust:
 
@@ -15,7 +14,7 @@ class Rebust:
 
     def __init__(self):
         self.api = datamuse.Datamuse()
-        self.app = ClarifaiApp(api_key='efac6c485194474790aa9732ed895aa2')
+        self.app = ClarifaiApp(api_key=config.get_api_key())
         self.workflow = Workflow(self.app.api, workflow_id="rebus-workflow")
 
     #given an array of strings and operators, concat individual rebus word
@@ -78,7 +77,7 @@ class Rebust:
         top_results = []
 
         for i in heapq.nlargest(5, results):
-            if self.get_syllables(i[1]) <= 3:
+            if self.get_syllables(i[1]) <= 2:
                 top_results.append(i[1])
 
         return top_results
@@ -88,7 +87,8 @@ class Rebust:
         for tk in tokens:
             # print(tk)
             if not isinstance(tk, list):
-                arr.append(tk)
+                # arr.append(tk)
+                arr += tk
             elif isinstance(tk, list):
                 if len(arr) == 0:
                     for x in tk:
@@ -100,6 +100,7 @@ class Rebust:
                             tmp.append(x + y)
                     arr = tmp.copy()
 
+        print(arr)
         return arr
 
 
@@ -120,19 +121,15 @@ class Rebust:
         final = []
 
         for x in poss:
-            res = self.get_sounds_like(x, 5)
+            res = self.get_sounds_like(x, 4)
             if res != None:
                 final += res[0:3]
 
         return final[0:self.MAX_WORD_RESULTS]
 
-    #this gon be a big boy
     def parse_rebus(self, rebus):
         guess = []
         #rebus input should be tuple (type, [str or (img_type, img)]
         for word in rebus:
             guess.append(self.solve_word(word))
-
         return guess
-
-
