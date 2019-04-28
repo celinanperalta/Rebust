@@ -2,12 +2,13 @@
 
 
 {% block content %}
-
+<div id="home">
 <div id="bish">
-    <button onclick="add_word()">Add New Word</button>
     <button onclick="append_img_input()">Upload Image</button>
     <button onclick="append_url_input()">Upload Image URL</button>
     <button onclick="append_text_input()">Upload Text</button>
+    <br><br>
+    <button onclick="add_word()">Add New Word</button>
 </div>
 
 <form id="rebus_form" action = "/" method = "POST" enctype = "multipart/form-data">
@@ -16,6 +17,7 @@
 </form>
 <br><br>
 <p>{{ extra_text }}</p>
+</div>
 <!--<img src="{{ user_image }}" alt="User Image">-->
 {% endblock %}
 

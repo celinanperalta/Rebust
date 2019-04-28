@@ -1,8 +1,3 @@
-html {
-
-
-}
-
 body{
     background-color: #e2ecf7;
     position: relative;
@@ -32,4 +27,7 @@ body{
 }
 #results img {
     max-width: 150px;
+}
+#home {
+    padding: 20px;
 }
