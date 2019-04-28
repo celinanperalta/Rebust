@@ -3,11 +3,29 @@
 
 {% block content %}
 
-{% for r in words %}
-<select>
-    {% for w in r %}
-        <option>{{ w }}</option>
+<div id="results">
+    <h1>Your rebus:</h1>
+    {% for r in puzzle %}
+        {% for w in r %}
+            {% if w[0] == 'img' %}
+            <img src="{{ w[1][1] }}" style="display:inline-block">
+            {% else %}
+            <p style="display:inline-block">{{ w[1] }}</p>
+            {% endif %}
+            <p style="display:inline-block">+</p>
+        {% endfor %}
+        <br>
     {% endfor %}
-</select>
-{% endfor %}
+    <h1>Results!</h1>
+    {% for r in answer %}
+    <select>
+        {% for w in r %}
+            <option>{{ w }}</option>
+        {% endfor %}
+    </select>
+    {% endfor %}
+    <br>
+    <a href="/">Run another rebus?</a>
+</div>
+
 {% endblock %}

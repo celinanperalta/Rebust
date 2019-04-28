@@ -67,7 +67,7 @@ class Rebust:
         if type == "url":
             response = self.workflow.predict_by_url(img)
         else:
-            response = self.workflow.predict_by_filename(img)
+            response = self.workflow.predict_by_filename(img[1])
 
         results = []
 

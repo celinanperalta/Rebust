@@ -57,8 +57,8 @@ def upload_files():
         rebust = Rebust()
         print(words)
         answers = rebust.parse_rebus(words)
-        print(answers)
-        return render_template('results.html', words=answers)
+        #print(answers)
+        return render_template('results.html', answer=answers, puzzle=words)
     else:
         return render_template('index.html')
 

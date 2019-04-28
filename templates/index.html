@@ -3,11 +3,13 @@
 
 {% block content %}
 
+<div id="bish">
+    <button onclick="add_word()">Add New Word</button>
+    <button onclick="append_img_input()">Upload Image</button>
+    <button onclick="append_url_input()">Upload Image URL</button>
+    <button onclick="append_text_input()">Upload Text</button>
+</div>
 
-<button onclick="add_word()">Add New Word</button>
-<button onclick="append_img_input()">Upload Image</button>
-<button onclick="append_url_input()">Upload Image URL</button>
-<button onclick="append_text_input()">Upload Text</button>
 <form id="rebus_form" action = "/" method = "POST" enctype = "multipart/form-data">
     <input type="hidden" id="size" name="size" value="0-0"/>
     <input type="submit" value="Submit Rebus"/><br>
