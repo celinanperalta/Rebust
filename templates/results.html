@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% for r in words %}
+<select>
+    {% for w in r %}
+        <option>{{ w }}</option>
+    {% endfor %}
+</select>
+{% endfor %}
+{% endblock %}

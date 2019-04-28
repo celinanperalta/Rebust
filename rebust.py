@@ -133,4 +133,6 @@ class Rebust:
         for word in rebus:
             guess.append(self.solve_word(word))
 
+        return guess
+
 

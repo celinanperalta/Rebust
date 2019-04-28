@@ -54,27 +54,17 @@ def upload_files():
                     str_type = "url"
                 words[word_num].append((str_type, request.form[str(word_num)+"-"+str(i)]))
 
-
-        # if file:
-        #     filename = secure_filename(file.filename)
-        #     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        #     file.save(full_filename)
         rebust = Rebust()
         print(words)
-        rebust.parse_rebus(words)
-        return render_template('index.html')
+        answers = rebust.parse_rebus(words)
+        print(answers)
+        return render_template('results.html', words=answers)
     else:
         return render_template('index.html')
 
 @app.route('/uploads/<filename>')
 def send_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
-
-@app.route('/yay1', methods=['POST'])
-def my_form_post():
-    text = request.form['text']
-    processed_text = text.lower()
-    return processed_text
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug = True)
